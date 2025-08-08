@@ -82,11 +82,11 @@ export default function WhiteboardRoom() {
   }, [whiteboardText]);
 
   // Update Yjs on local change
-  const handleTitleChange = (e) => {
+  const handleTitleChange = (e: { target: { value: string; }; }) => {
     yTitleRef.current?.delete(0, yTitleRef.current.length);
     yTitleRef.current?.insert(0, e.target.value);
   };
-  const handleTextChange = (e) => {
+  const handleTextChange = (e: { target: { value: string; }; }) => {
     yTextRef.current?.delete(0, yTextRef.current.length);
     yTextRef.current?.insert(0, e.target.value);
   };

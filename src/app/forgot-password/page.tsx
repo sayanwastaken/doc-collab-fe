@@ -16,8 +16,9 @@ export default function ForgotPasswordPage() {
     try {
       await forgotPassword(email);
       router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
-    } catch (err: any) {
-      setError(err.message || "Failed to send OTP");
+    } catch (err: unknown) {
+      // Handle error
+      setError(err instanceof Error ? err.message : "Failed to send OTP");
     } finally {
       setLoading(false);
     }

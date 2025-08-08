@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
 
   // Check if authenticated user is trying to access auth pages
   if (pathname === "/" || pathname === "/signup") {
-    const token = request.cookies.get("accessToken")?.value;
+    // const token = request.cookies.get("accessToken")?.value;
 
     // if (token) {
     //   // Redirect to dashboard if already authenticated

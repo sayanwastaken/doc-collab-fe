@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
   TextField,
   Typography,
   InputAdornment,

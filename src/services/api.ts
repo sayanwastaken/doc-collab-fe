@@ -30,8 +30,11 @@ export const authApi = {
         headers: { "Content-Type": "application/json" },
       });
       return response.data;
-    } catch (error: any) {
-      const message = error.response?.data?.message || "Signup failed";
+    } catch (error:unknown) {
+      let message = "Signup failed";
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        message = error.response.data.message;
+      }
       throw new Error(message);
     }
   },
@@ -42,8 +45,11 @@ export const authApi = {
         headers: { "Content-Type": "application/json" },
       });
       return response.data;
-    } catch (error: any) {
-      const message = error.response?.data?.message || "Login failed";
+    } catch (error) {
+      let message = "Login failed";
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        message = error.response.data.message;
+      }
       throw new Error(message);
     }
   },
@@ -89,8 +95,11 @@ export const forgotPassword = async (email: string) => {
       { headers: { "Content-Type": "application/json" } }
     );
     return response.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || "Failed to send OTP";
+  } catch (error: unknown) {
+   let message = "Failed to send OTP";
+    if (axios.isAxiosError(error) && error.response?.data?.message) {
+      message = error.response.data.message;
+    }
     throw new Error(message);
   }
 };
@@ -103,8 +112,11 @@ export const verifyOtp = async (email: string, otp: string) => {
       { headers: { "Content-Type": "application/json" } }
     );
     return response.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || "Invalid OTP";
+  } catch (error: unknown) {
+    let message = "Invalid OTP";
+    if (axios.isAxiosError(error) && error.response?.data?.message) {
+      message = error.response.data.message;
+    }
     throw new Error(message);
   }
 };
@@ -121,8 +133,11 @@ export const resetPassword = async (
       { headers: { "Content-Type": "application/json" } }
     );
     return response.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || "Failed to reset password";
+  } catch (error: unknown) {
+    let message = "Failed to reset password";
+    if (axios.isAxiosError(error) && error.response?.data?.message) {
+      message = error.response.data.message;
+    }
     throw new Error(message);
   }
 };

@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { resetPassword } from "@/services/api";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
@@ -24,8 +24,9 @@ export default function ResetPasswordPage() {
     try {
       await resetPassword(email, otp, password);
       router.push("/login?reset=success");
-    } catch (err: any) {
-      setError(err.message || "Failed to reset password");
+    } catch (err: unknown) {
+      // Handle error
+      setError(err instanceof Error ? err.message : "Failed to reset password");
     } finally {
       setLoading(false);
     }
@@ -62,5 +63,13 @@ export default function ResetPasswordPage() {
         {loading ? "Resetting..." : "Reset Password"}
       </button>
     </form>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

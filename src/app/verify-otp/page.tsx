@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { verifyOtp } from "@/services/api";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function VerifyOtpPage() {
+function VerifyOtpContent() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,8 +22,9 @@ export default function VerifyOtpPage() {
           email
         )}&otp=${encodeURIComponent(otp)}`
       );
-    } catch (err: any) {
-      setError(err.message || "Invalid OTP");
+    } catch (err: unknown) {
+      // Handle error
+      setError(err instanceof Error ? err.message : "Invalid OTP");
     } finally {
       setLoading(false);
     }
@@ -52,5 +53,13 @@ export default function VerifyOtpPage() {
         {loading ? "Verifying..." : "Verify OTP"}
       </button>
     </form>
+  );
+}
+
+export default function VerifyOtpPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyOtpContent />
+    </Suspense>
   );
 }

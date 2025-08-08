@@ -211,7 +211,7 @@ export default function Login() {
           }}
         >
           <Typography variant="body2" color="text.secondary">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Box
               component="span"
               sx={{ color: "primary.main", cursor: "pointer", fontWeight: 500 }}
