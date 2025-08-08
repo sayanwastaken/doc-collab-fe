@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DocCollab Frontend
+
+A real-time document collaboration application built with Next.js and Material-UI.
+
+## Features
+
+- **User Authentication**: Complete signup and login flow
+- **Token Management**: Secure storage of access and refresh tokens
+- **Protected Routes**: Middleware-based route protection
+- **Responsive Design**: Modern UI with Material-UI components
+- **State Management**: React Context for authentication state
+
+## Authentication Flow
+
+### Signup Process
+
+1. User fills out the signup form with name, email, and password
+2. Form validation ensures all fields are properly filled
+3. API call to `/users/signup` endpoint
+4. On success, tokens are stored in localStorage and cookies
+5. User is redirected to login page
+
+### Login Process
+
+1. User enters email and password
+2. Form validation ensures proper email format and required fields
+3. API call to `/users/signin` endpoint
+4. On success, tokens are stored and user is redirected to dashboard
+5. Authentication context is updated with user information
+
+### Token Storage
+
+- **localStorage**: For client-side access
+- **Cookies**: For middleware authentication checks
+- **Access Token**: 24-hour expiration
+- **Refresh Token**: 7-day expiration
+
+### Protected Routes
+
+- Dashboard is protected and requires authentication
+- Unauthenticated users are redirected to login
+- Authenticated users are redirected to dashboard when accessing auth pages
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js app directory
+│   ├── dashboard/         # Protected dashboard page
+│   ├── signup/           # Signup page
+│   └── layout.tsx        # Root layout with providers
+├── components/           # Reusable components
+│   ├── login/           # Login component
+│   └── signup/          # Signup component
+├── contexts/            # React contexts
+│   └── AuthContext.tsx  # Authentication context
+├── services/            # API services
+│   └── api.ts          # Authentication API functions
+└── middleware.ts        # Next.js middleware for route protection
+```
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up environment variables:
+   Create a `.env.local` file with:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:3000
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start the development server:
 
-## Learn More
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Make sure the backend server is running on the specified port
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Endpoints
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The frontend communicates with the following backend endpoints:
 
-## Deploy on Vercel
+- `POST /users/signup` - User registration
+- `POST /users/signin` - User authentication
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15** - React framework
+- **Material-UI** - UI component library
+- **TypeScript** - Type safety
+- **React Context** - State management
+- **Next.js Middleware** - Route protection
+
+## Security Features
+
+- Form validation on both client and server
+- Secure token storage
+- Protected routes with middleware
+- CSRF protection with SameSite cookies
+- Input sanitization and validation
