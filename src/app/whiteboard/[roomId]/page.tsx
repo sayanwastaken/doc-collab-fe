@@ -44,7 +44,7 @@ export default function WhiteboardRoom() {
     const room = Array.isArray(roomId) ? roomId[0] : roomId;
 
     const provider = new SocketIOProvider(
-      "http://localhost:3000",
+      process.env.NEXT_PUBLIC_WSS_URL || "http://localhost:4050",
       room,
       ydoc,
       {}
